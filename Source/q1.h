@@ -1,7 +1,6 @@
-#include<iostream>
 #include<iomanip>
 #include<string>
-#include"..\Lab\List.h"
+#include"../Lab/List.h"
 
 using std::string;
 using std::setw;
@@ -14,7 +13,7 @@ public:
     string num, name, sex, cate;
 
     Student(string n = "", int32_t a = 0, string na = "", string s = "", string c = "")
-    : num(n), age(a){
+            : num(n), age(a){
         name = na;
         sex = s;
         cate = c;
@@ -48,6 +47,10 @@ public:
         num = n;
         age = a;
     }
+
+    bool operator == (const Student &a) const{
+        return num == a.num || name == a.name;
+    }
 };
 
 
@@ -57,12 +60,21 @@ public:
     List<Student> sl;
 
 public:
-    
+
     void Add(string n,int32_t a, string na, string s, string c);
 
     void Print(ListNode<Student>* tar) const;
 
+    void Print(Student* tar) const;
+
     void Display() const;
+
+    //s is numberwhen opt is 0 and s is name when opt is 1
+    Student* FindStudent(int option, string s);
+
+    bool ChangeStudent(int option, string s, Student new_info);
+
+    bool DeleteStudent(int option, string s);
 };
 
 
@@ -88,6 +100,10 @@ void StudentList::Print(ListNode<Student>* tar) const{
     cout << setw(10) << student.num << setw(10) << student.name << setw(6) << student.sex << setw(8) << student.age << student.cate << endl;
 }
 
+void StudentList::Print(Student* tar) const{
+    cout << setw(10) << tar->num << setw(10) << tar->name << setw(6) << tar->sex << setw(8) << tar->age << tar->cate << endl;
+}
+
 void StudentList::Display() const{
     cout << setw(10) << "考号" << setw(10) << "姓名" << setw(6) << "性别" << setw(8) << "年龄" << "报考类别" << endl;
     ListNode<Student>* cur = sl.get_head();
@@ -96,4 +112,28 @@ void StudentList::Display() const{
         cur = cur->get_nxtptr();
     }
 }
+
+Student* StudentList::FindStudent(int option, string s){
+    Student stu;
+    if(!option) stu.num = s;
+    else  stu.name = s;
+    ListNode<Student>* res = sl.Find(stu);
+    return res ? res->get_ptr() : nullptr;
+}
+
+bool StudentList::ChangeStudent(int option, string s, Student new_info){
+    Student stu;
+    if(!option) stu.num = s;
+    else  stu.name = s;
+    return sl.Change(stu, new_info);
+}
+
+bool StudentList::DeleteStudent(int option, string s){
+    Student stu;
+    if(!option) stu.num = s;
+    else  stu.name = s;
+    return sl.Delete(stu);
+}
+
+
 

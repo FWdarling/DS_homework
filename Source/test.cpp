@@ -1,33 +1,27 @@
-#include"..\Lab\vector.h"
+#include"q1.h"
 
 using std::cout;
 using std::endl;
+
 int main(){
-    Vector<int> v;
-    cout << v.get_len() << "  " << v.get_size() << endl;
-    cout << v.empty() << endl;
-    for(int i = 0; i < 10; i++){
-        v.push_back(i);
-    }
-    cout << v.get_len() << "  " << v.get_size() << endl;
-    cout << v.empty() << endl;
-    cout << v[5] << endl;
-    v[5] = 0;
-    cout << v[5] << endl;
-    cout << v[10] << endl;
-    Vector<int> v1 = v;
-    cout <<  v1.get_len() << "  " << v1.get_size() << endl;
-    cout << v1.empty() << endl;
-    cout << v1[5] << endl;
-    cout << v1[9] << endl;
-    v1.pop_back();
-    cout << v1[9] << endl;
-    cout << v1.get_len() << endl;
-    v1.push_back(-1);
-    cout << v1[9] << endl;
-    cout << v1.get_len() << endl;
-    v1.clear();
-    cout << v1.get_len() << "  " << v1.get_size() << endl;
-    cout << v1.empty() << endl;
+    StudentList sl;
+    Student s1("1234", 18, "wang", "男", "工程师");
+    Student s2("4321", 18, "li", "男", "工程师");
+    cout << sl.sl.empty () << endl;
+    sl.sl.Add (s1);
+    sl.sl.Add (s2);
+    cout << sl.sl.empty () << endl;
+    cout << sl.sl.get_len () << endl;
+    sl.Display ();
+    sl.Print(sl.FindStudent(0, "4321"));
+    sl.Print(sl.FindStudent(1, "wang"));
+    cout << sl.DeleteStudent(1, "LI");
+    sl.Display();
+    cout << sl.DeleteStudent(1, "li");
+    sl.Display();
+    sl.sl.Add(Student("abcd", 10, "hahah", "女", "班主任"));
+    sl.Display();
+    cout << sl.ChangeStudent(0, "abcd", Student("77", 7, "7", "77", "777"));
+    sl.Display();
     return 0;
 }

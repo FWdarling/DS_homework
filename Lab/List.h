@@ -10,12 +10,15 @@ private:
 
 public:
 
+    ListNode() = default;
     ListNode(T v, ListNode* n = nullptr): value(v){
         nxt = n;
     }
     ~ListNode() = default;
 
     T get_value() const{ return value;}
+
+    T* get_ptr() { return &value;}
 
     ListNode* get_nxtptr() const{return nxt;}
 
@@ -29,7 +32,7 @@ template<typename T>
 class List{
 private:
     int32_t len;
-    //head is a pointer to the first student node and last is a pointer to the last node
+    //head is a pointer to the first list node and last is a pointer to the last node
     ListNode<T>* head, *last;
 
 public:
@@ -40,13 +43,12 @@ public:
     ~List(){
         ListNode<T>* cur = this->head;
         while(cur){
-            ListNode<T>* nxt = cur->nxt;
+            ListNode<T>* next = cur->get_nxtptr();
             delete(cur);
-            cur = nxt;
+            cur = next;
         }
-        delete this;
     };
-    
+
     void Add(T val);
 
     ListNode<T>* Find(T val) const;
@@ -66,11 +68,13 @@ public:
 
     ListNode<T>* get_last() const{return last;}
 
-    void set_head(ListNode<T>* h){head = h;}
+    void set_head(ListNode<T>* h) {head = h;}
 
-    void set_last(ListNode<T>* l){last = l;}
+    void set_last(ListNode<T>* l) {last = l;}
 
     void set_len(int32_t l){len = l;}
+
+    bool empty(){return !len;}
 
 };
 
@@ -80,13 +84,16 @@ void List<T>::Add(T val){
         head = last = new ListNode<T>(val);
     }
     else{
-        last = last->nxt = new ListNode<T>(val);
+
+        ListNode<T>* new_ptr = new ListNode<T>(val);
+        last->set_nxtptr(new_ptr);
+        last = new_ptr;
     }
     this->len++;
 }
 
 
-//if it cant find the number, then return nullptr, 
+//if it cant find the number, then return nullptr,
 template<typename T>
 ListNode<T>* List<T>::Find(T val) const{
     ListNode<T>* cur = this->head;
@@ -94,12 +101,12 @@ ListNode<T>* List<T>::Find(T val) const{
         if(cur->get_value() == val){
             return cur;
         }
-        cur = cur->nxt;
+        cur = cur->get_nxtptr();
     }
     return cur;
 }
 
-//behind insert 
+//behind insert
 //the index includes zero
 template<typename T>
 bool List<T>::Insert(int32_t ind, T val){
@@ -107,12 +114,13 @@ bool List<T>::Insert(int32_t ind, T val){
     ListNode<T>* cur = this->head;
     while(cur){
         if(!ind){
-            ListNode<T>* next = cur->nxt;
-            cur->nxt = new ListNode<T>(val, next);
+            ListNode<T>* next = cur->get_nxtptr();
+            ListNode<T>* new_ptr = new ListNode<T>(val, next);
+            cur->set_nxtptr(new_ptr);
             this->len++;
             return true;
         }
-        cur = cur->nxt;
+        cur = cur->get_nxtptr();
         ind--;
     }
     return false;
@@ -134,13 +142,23 @@ bool List<T>::Delete(T val){
     ListNode<T>* lst = cur;
     while(cur){
         if(cur->get_value() == val){
-            lst->nxt = cur->nxt;
+            if(cur == head){
+                if(head == last){
+                    head = last = nullptr;
+                }
+                head = head->get_nxtptr ();
+                len--;
+                delete cur;
+                return true;
+            }
+            lst->set_nxtptr(cur->get_nxtptr());
             delete cur;
             this->len--;
+            last = lst;
             return true;
         }
         lst = cur;
-        cur = cur->nxt;
+        cur = cur->get_nxtptr();
     }
     return false;
 }
@@ -149,7 +167,7 @@ template<typename T>
 void List<T>::Clear(){
     ListNode<T>* cur = this->head;
     while(cur){
-        ListNode<T>* nxt = cur->nxt;
+        ListNode<T>* nxt = cur->get_nxtptr();
         delete(cur);
         cur = nxt;
     }
