@@ -1,22 +1,13 @@
-#include"../Lab/stack.h"
+#include"q1.h"
 
 using std::cout;
 using std::endl;
 
 int main(){
-    Stack<int> s;
-    cout <<s.empty() << endl;
-    cout << s.top() << endl;
-    s.pop();
-    s.push(1);
-    s.push(2);
-    cout << s.top() << endl;
-    s.pop();
-    cout << s.top() << endl;
-    s.push(0);
-    cout << s.top() << endl;
-    cout << s.empty() << endl;
-    s.pop();s.pop();
-    cout << s.top() << endl << s.empty() << endl;
+    StudentList sl;
+    Student s("1853204", 18, "Darling", "Male", "Student");
+    sl.Add("1719111", 12, "Lucy Brown", "Female", "Teacher");
+    sl.sl.Add(s);
+    sl.Display();
     return 0;
 }

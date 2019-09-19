@@ -6,6 +6,8 @@ using std::string;
 using std::setw;
 using std::endl;
 using std::cout;
+using std::left;
+using std::ios;
 
 class Student{
 public:
@@ -81,7 +83,7 @@ public:
 
 void StudentList::Add(string n, int32_t a, string na, string s, string c){
     Student st(n, a, na,  s, c);
-    List<Student> slt = this->sl;
+    List<Student>& slt = this->sl;
     if(!slt.get_head()){
         ListNode<Student>* lnsp = new ListNode<Student>(st);
         slt.set_head(lnsp);
@@ -97,15 +99,15 @@ void StudentList::Add(string n, int32_t a, string na, string s, string c){
 
 void StudentList::Print(ListNode<Student>* tar) const{
     Student student = tar->get_value();
-    cout << setw(10) << student.num << setw(10) << student.name << setw(6) << student.sex << setw(8) << student.age << student.cate << endl;
+    cout << std::setiosflags(ios::left) << setw(10) << student.num  << setw(15) << student.name << setw(10) << student.sex << setw(6) << student.age << setw(30) << student.cate << endl;
 }
 
 void StudentList::Print(Student* tar) const{
-    cout << setw(10) << tar->num << setw(10) << tar->name << setw(6) << tar->sex << setw(8) << tar->age << tar->cate << endl;
+    cout << std::setiosflags(ios::left) << setw(10) << tar->num  << setw(15) << tar->name << setw(10) << tar->sex << setw(6) << tar->age << setw(30) << tar->cate << endl;
 }
 
 void StudentList::Display() const{
-    cout << setw(10) << "考号" << setw(10) << "姓名" << setw(6) << "性别" << setw(8) << "年龄" << "报考类别" << endl;
+    cout << std::setiosflags(ios::left) << setw(10) << "Number"  << setw(15) << "Name"  << setw(10) << "Gender"  << setw(6) << "Age" << setw(30) << "Category" << endl;
     ListNode<Student>* cur = sl.get_head();
     while(cur){
         Print(cur);
