@@ -1,3 +1,11 @@
+//
+// Created by FWDarling on 9/19/2019.
+//
+
+#ifndef DSTEST_VECTOR_H
+#define DSTEST_VECTOR_H
+
+#endif //DSTEST_VECTOR_H
 #include<iostream>
 
 template<typename T>
@@ -11,7 +19,7 @@ private:
 //to avoid vesting memory, when len * 4 < size then shrink
     void shrink();
 
-    void expand(); 
+    void expand();
 public:
 
     Vector<T>(int32_t s = 1024) :size(s){
@@ -38,7 +46,7 @@ public:
     Vector<T>& operator = (Vector<T> v);
 
     void resize(int32_t s);
-    
+
     void push_back(T a);
 
     void pop_back();
@@ -82,9 +90,9 @@ void Vector<T>::push_back(T a){
 
 template<typename T>
 void Vector<T>::pop_back(){
-     len--;
-     end = ptr + (len ? len - 1 : 1);
-     shrink();
+    len--;
+    end = ptr + (len ? len - 1 : 1);
+    shrink();
 }
 
 template<typename T>
@@ -124,5 +132,5 @@ Vector<T>& Vector<T>::operator =(Vector<T> v){
         ptr[i] = v[i];
     }
     end = ptr + (len ? len - 1 : 1);
-    return v;
+    return *this;
 }
