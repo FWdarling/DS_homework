@@ -30,7 +30,11 @@ public:
 
     void remove(T val);
 
+    void remove(int32_t ind);
+
     int32_t get_index(T val);
+
+    T display(int32_t ind);
 
     void print();
 };
@@ -86,6 +90,21 @@ void MaxHeap<T>::remove(T val){
 }
 
 template<typename T>
+void MaxHeap<T>::remove(int32_t ind){
+    if(!size) {
+        cout << "Heap is empty!" << endl;
+        return;
+    }
+    if(ind == -1){
+        cout << "Val is not in the heap!" << endl;
+        return;
+    }
+    v[ind] = v[size - 1];
+    size--;
+    fitdown(ind);
+}
+
+template<typename T>
 int32_t MaxHeap<T>::get_index(T val){
     if(!size){
         cout << "Heap is empty!" << endl;
@@ -95,6 +114,16 @@ int32_t MaxHeap<T>::get_index(T val){
         if(v[i] == val) return i;
     }
     return -1;
+}
+
+template<typename T>
+T MaxHeap<T>::display(int32_t ind){
+    if(ind >= size) {
+        register T tem;
+        cout << "index is out of table!" << endl;
+        return tem;
+    }
+    return v[ind];
 }
 
 template<typename T>

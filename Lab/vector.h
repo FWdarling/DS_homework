@@ -8,6 +8,9 @@
 #endif //DSTEST_VECTOR_H
 #include<iostream>
 
+using std::cout;
+using std::endl;
+
 template<typename T>
 class Vector{
 
@@ -47,11 +50,15 @@ public:
 
     void resize(int32_t s);
 
-    void push_back(T a);
+    void push_back(T& a);
 
     void pop_back();
 
     void clear();
+
+    int32_t find(T val);
+
+    bool Delete(int32_t ind);
 
 };
 
@@ -82,7 +89,7 @@ void Vector<T>::resize(int32_t s){
 }
 
 template<typename T>
-void Vector<T>::push_back(T a){
+void Vector<T>::push_back(T& a){
     ptr[len++] = a;
     end = ptr + len - 1;
     expand();
@@ -133,4 +140,27 @@ Vector<T>& Vector<T>::operator =(Vector<T> v){
     }
     end = ptr + (len ? len - 1 : 1);
     return *this;
+}
+
+template<typename T>
+int32_t Vector<T>::find(T val){
+    for(int32_t i = 0; i < this->get_len(); i++){
+        if((*this)[i] == val) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+template<typename T>
+bool Vector<T>::Delete(int32_t ind){
+    if(ind < 0 || ind >= len){
+        cout << "the ind is out of table!" << endl;
+        return false;
+    }
+    for(int i = ind; i < len - 1; i++){
+        ptr[i] = ptr[i + 1];
+    }
+    pop_back();
+    return true;
 }
