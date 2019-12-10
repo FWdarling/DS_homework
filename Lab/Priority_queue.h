@@ -20,6 +20,8 @@ public:
     T top();
 
     int32_t get_size() {return size;};
+
+    bool empty(){return !size;}
 };
 
 template<typename T>
@@ -32,6 +34,7 @@ template<typename T>
 void Priority_queue<T>::pop(){
     int32_t index = 0;
     heap.remove(index);
+    size--;
 }
 
 template<typename T>

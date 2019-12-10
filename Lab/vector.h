@@ -112,8 +112,9 @@ void Vector<T>::clear(){
 template<typename T>
 T& Vector<T>::operator [](int32_t ind){
     static T t;
-    if(ind >= len || ind < 0) {
-        std::cout << "out of the table" << std::endl;
+    if(ind >= size || ind < 0) {
+        std::cout << "index is " << ind << " but size is " << size << endl;
+        std::cout << "vector is out of the table" << std::endl;
         return t;
     }
     return ptr[ind];
@@ -122,8 +123,9 @@ T& Vector<T>::operator [](int32_t ind){
 template<typename T>
 const T& Vector<T>::operator [] (int32_t ind) const{
     static T t;
-    if(ind >= len || ind < 0) {
-        std::cout << "out of the table" << std::endl;
+    if(ind >= size || ind < 0) {
+        std::cout << "index is " << ind << " but size is " << size << endl;
+        std::cout << "vector is out of the table" << std::endl;
         return t;
     }
     return ptr[ind];
@@ -155,7 +157,7 @@ int32_t Vector<T>::find(T val){
 template<typename T>
 bool Vector<T>::Delete(int32_t ind){
     if(ind < 0 || ind >= len){
-        cout << "the ind is out of table!" << endl;
+        cout << "the index is out of table!" << endl;
         return false;
     }
     for(int i = ind; i < len - 1; i++){

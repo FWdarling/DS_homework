@@ -43,14 +43,21 @@ template<typename T>
 void MaxHeap<T>::fitdown(int32_t ind){
     if((ind << 1) + 1 >= size) return ;
     T s1 = v[(ind << 1) + 1], s2 = v[(ind << 1) + 2];
-    if(s2 < s1 && v[ind] < s1){
-        v[(ind << 1) + 1] = v[ind];
-        v[ind] = s1;
-        fitdown((ind << 1) + 1);
-    }else if(s1 < s2 && v[ind] < s2){
-        v[(ind << 1) + 2] = v[ind];
-        v[ind] = s2;
-        fitdown((ind << 1) + 2);
+    if((ind << 1) + 2 >= size){
+        if(v[ind] < s1){
+            v[ind << 1 + 1] = v[ind];
+            v[ind] = s1;
+        }
+    }else{
+        if((s2 < s1 || s2 == s1) && v[ind] < s1){
+            v[(ind << 1) + 1] = v[ind];
+            v[ind] = s1;
+            fitdown((ind << 1) + 1);
+        }else if(s1 < s2 && v[ind] < s2){
+            v[(ind << 1) + 2] = v[ind];
+            v[ind] = s2;
+            fitdown((ind << 1) + 2);
+        }
     }
 }
 
@@ -85,6 +92,7 @@ void MaxHeap<T>::remove(T val){
         return;
     }
     v[ind] = v[size - 1];
+    v.pop_back();
     size--;
     fitdown(ind);
 }
@@ -100,6 +108,7 @@ void MaxHeap<T>::remove(int32_t ind){
         return;
     }
     v[ind] = v[size - 1];
+    v.pop_back();
     size--;
     fitdown(ind);
 }
