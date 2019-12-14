@@ -1,3 +1,5 @@
+#ifndef PQ_H
+#define PQ_H
 #include"MaxHeap.h"
 
 template<typename T>
@@ -46,3 +48,4 @@ T Priority_queue<T>::top(){
     }
     return heap.display(0);
 }
+#endif

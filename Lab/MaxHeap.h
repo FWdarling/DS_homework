@@ -1,3 +1,5 @@
+#ifndef MAXHEAP_H
+#define MAXHEAP_H
 
 #include"vector.h"
 
@@ -10,25 +12,22 @@ private:
     Vector<T> v;
     int32_t size;
 
-
-// operator < overload needed
-    void fitdown(int32_t ind);
-
-    void fitup(int32_t ind);
-
 public:
     MaxHeap(){
         size = 0;
     };
-    MaxHeap(Vector<T> vt, int32_t s = 0){
+    MaxHeap(Vector<T> &vt){
         v = vt;
         size = vt.get_len();
     }
     ~MaxHeap() = default;
 
-    void add(T val);
+    // operator < overload needed
+    void fitdown(int32_t ind);
 
-    void remove(T val);
+    void fitup(int32_t ind);
+
+    void add(T val);
 
     void remove(int32_t ind);
 
@@ -37,6 +36,11 @@ public:
     T display(int32_t ind);
 
     void print();
+
+    //the function is used to sort
+    void swap(int32_t ind1, int32_t ind2);
+
+    Vector<T>& get_vector(){return v;}
 };
 
 template<typename T>
@@ -45,7 +49,7 @@ void MaxHeap<T>::fitdown(int32_t ind){
     T s1 = v[(ind << 1) + 1], s2 = v[(ind << 1) + 2];
     if((ind << 1) + 2 >= size){
         if(v[ind] < s1){
-            v[ind << 1 + 1] = v[ind];
+            v[(ind << 1) + 1] = v[ind];
             v[ind] = s1;
         }
     }else{
@@ -81,23 +85,6 @@ void MaxHeap<T>::add(T val){
 }
 
 template<typename T>
-void MaxHeap<T>::remove(T val){
-    if(!size) {
-        cout << "Heap is empty!" << endl;
-        return;
-    }
-    int32_t ind = get_index(val);
-    if(ind == -1){
-        cout << "Val is not in the heap!" << endl;
-        return;
-    }
-    v[ind] = v[size - 1];
-    v.pop_back();
-    size--;
-    fitdown(ind);
-}
-
-template<typename T>
 void MaxHeap<T>::remove(int32_t ind){
     if(!size) {
         cout << "Heap is empty!" << endl;
@@ -119,7 +106,7 @@ int32_t MaxHeap<T>::get_index(T val){
         cout << "Heap is empty!" << endl;
         return -1;
     }
-    for(int i = 0; i < size; i++){
+    for(int32_t i = 0; i < size; i++){
         if(v[i] == val) return i;
     }
     return -1;
@@ -140,7 +127,17 @@ void MaxHeap<T>::print(){
     if(!size){
         cout << "Heap is empty!" << endl;
     }
-    for(int i = 0; i < size; i++){
+    for(int32_t i = 0; i < size; i++){
         cout << i << ":" << v[i] << endl;
     }
 }
+
+template<typename T>
+void MaxHeap<T>::swap(int32_t ind1, int32_t ind2){
+    v[ind1] = v[ind1] ^ v[ind2];
+    v[ind2] = v[ind1] ^ v[ind2];
+    v[ind1] = v[ind1] ^ v[ind2];
+    size--;
+}
+
+#endif

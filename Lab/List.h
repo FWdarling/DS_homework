@@ -1,3 +1,5 @@
+#ifndef LIST_H
+#define LIST_H
 #include<iostream>
 
 
@@ -174,4 +176,6 @@ void List<T>::Clear(){
     len = 0;
     head = last = nullptr;
 }
+
+#endif
 

@@ -5,7 +5,6 @@
 #ifndef DSTEST_VECTOR_H
 #define DSTEST_VECTOR_H
 
-#endif //DSTEST_VECTOR_H
 #include<iostream>
 
 using std::cout;
@@ -25,14 +24,14 @@ private:
     void expand();
 public:
 
-    Vector<T>(int32_t s = 1024) :size(s){
+    Vector<T>(int32_t s = 64) :size(s){
         len = 0;
         ptr = new T[s];
         end = ptr;
     }
 
     ~Vector<T>(){
-        delete [] ptr;
+        if(ptr) delete [] ptr;
         end = nullptr;
     };
 
@@ -46,7 +45,7 @@ public:
 
     const T& operator [] (int32_t ind)const;
 
-    Vector<T>& operator = (Vector<T> v);
+    Vector<T>& operator = (Vector<T> &v);
 
     void resize(int32_t s);
 
@@ -65,7 +64,7 @@ public:
 template<typename T>
 void Vector<T>::shrink(){
     if(len < (size << 2)){
-        this->resize(len << 1);
+        this->resize(len ? len << 1 : size << 2);
     }
 }
 
@@ -79,7 +78,7 @@ void Vector<T>:: expand(){
 template<typename T>
 void Vector<T>::resize(int32_t s){
     T* new_ptr = new T[s];
-    for(int i = 0; i < this->len; i++){
+    for(int32_t i = 0; i < this->len; i++){
         new_ptr[i] = this->ptr[i];
     }
     delete[] this->ptr;
@@ -132,11 +131,12 @@ const T& Vector<T>::operator [] (int32_t ind) const{
 }
 
 template<typename T>
-Vector<T>& Vector<T>::operator =(Vector<T> v){
+Vector<T>& Vector<T>::operator = (Vector<T> &v){
     size = v.get_size();
     len = v.get_len();
-    delete [] ptr;
+    T* temptr = ptr;
     this->ptr = new T[size];
+    if(temptr)     delete [] temptr;
     for(int i = 0; i < len; i++){
         ptr[i] = v[i];
     }
@@ -166,3 +166,5 @@ bool Vector<T>::Delete(int32_t ind){
     pop_back();
     return true;
 }
+
+#endif //DSTEST_VECTOR_H

@@ -1,4 +1,5 @@
-
+#ifndef PRIM_H
+#define PRIM_H
 #include"priority_queue.h"
 
 class Edge{
@@ -40,9 +41,11 @@ public:
         all_edges.resize(n);
     };
     ~MST() = default;
+    
     void input(int32_t ori, int32_t tar, int32_t len);
 
     void generate();
+
     const Vector<Edge>& get_mst()const{return mst;}
 };
 
@@ -76,3 +79,5 @@ void MST::generate(){
         cur = shortest_edge.get_tar();
     }
 }
+
+#endif

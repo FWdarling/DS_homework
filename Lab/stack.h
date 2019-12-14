@@ -1,3 +1,5 @@
+#ifndef STACK_H
+#define STACK_H
 #include"vector.h"
 
 using std::cout;
@@ -67,3 +69,5 @@ const T& Stack<T>::top()const{
     }
     return v[len - 1];
 } 
+
+#endif

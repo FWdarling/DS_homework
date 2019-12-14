@@ -1,3 +1,5 @@
+#ifndef TREE_H
+#define TREE_H
 #include "vector.h"
 
 using std::string;
@@ -36,7 +38,7 @@ public:
 
     Vector<TreeNode<T> *> &get_sons() { return sons; }
 
-    bool operator==(const TreeNode<T> &a) const
+    bool operator == (const TreeNode<T> &a) const
     {
         return value == a.get_value();
     }
@@ -68,8 +70,6 @@ public:
     void Add(TreeNode<T> *fa, T val);
 
     void Add(T tar, T val);
-
-    bool Delete(T val);
 
     void Delete(TreeNode<T> *tar);
 
@@ -121,7 +121,7 @@ void Tree<T>::Add(T tar, T val)
     TreeNode<T> *fa = find(tar);
     Add(fa, val);
 }
-
+/*
 template <typename T>
 bool Tree<T>::Delete(T val)
 {
@@ -134,7 +134,7 @@ bool Tree<T>::Delete(T val)
     Delete(find_res);
     return true;
 }
-
+*/
 template <typename T>
 void Tree<T>::Delete(TreeNode<T> *tar)
 {
@@ -170,3 +170,5 @@ void Tree<T>::clear()
 {
     Delete(root);
 }
+
+#endif
