@@ -63,7 +63,10 @@ public:
 
 public:
 
+    //number, age, name, sex, category
     void Add(string n,int32_t a, string na, string s, string c);
+
+    void Add(Student st);
 
     void Print(ListNode<Student>* tar) const;
 
@@ -71,18 +74,38 @@ public:
 
     void Display() const;
 
-    //s is numberwhen opt is 0 and s is name when opt is 1
-    Student* FindStudent(int option, string s);
+    //s is number when opt is 0 and s is name when opt is 1
+    Student* findStudent(int32_t option, string s);
 
-    bool ChangeStudent(int option, string s, Student new_info);
+    //s is number when opt is 0 and s is name when opt is 1
+    bool changeStudent(int32_t option, string s, Student new_info);
 
-    bool DeleteStudent(int option, string s);
+    //s is number when opt is 0 and s is name when opt is 1
+    bool deleteStudent(int32_t option, string s);
+
+    //s is number when opt is 0 and s is name when opt is 1
+    bool insertStudent(int32_t position, Student s);
 };
 
 
 
 void StudentList::Add(string n, int32_t a, string na, string s, string c){
     Student st(n, a, na,  s, c);
+    List<Student>& slt = this->sl;
+    if(!slt.get_head()){
+        ListNode<Student>* lnsp = new ListNode<Student>(st);
+        slt.set_head(lnsp);
+        slt.set_last(lnsp);
+    }
+    else{
+        ListNode<Student>*  nxt = new ListNode<Student>(st);
+        slt.get_last()->set_nxtptr(nxt);
+        slt.set_last(nxt);
+    }
+    sl.set_len(sl.get_len() + 1);
+}
+
+void StudentList::Add(Student st){
     List<Student>& slt = this->sl;
     if(!slt.get_head()){
         ListNode<Student>* lnsp = new ListNode<Student>(st);
@@ -115,7 +138,7 @@ void StudentList::Display() const{
     }
 }
 
-Student* StudentList::FindStudent(int option, string s){
+Student* StudentList::findStudent(int32_t option, string s){
     Student stu;
     if(!option) stu.num = s;
     else  stu.name = s;
@@ -123,18 +146,22 @@ Student* StudentList::FindStudent(int option, string s){
     return res ? res->get_ptr() : nullptr;
 }
 
-bool StudentList::ChangeStudent(int option, string s, Student new_info){
+bool StudentList::changeStudent(int32_t option, string s, Student new_info){
     Student stu;
     if(!option) stu.num = s;
     else  stu.name = s;
     return sl.Change(stu, new_info);
 }
 
-bool StudentList::DeleteStudent(int option, string s){
+bool StudentList::deleteStudent(int32_t option, string s){
     Student stu;
     if(!option) stu.num = s;
     else  stu.name = s;
     return sl.Delete(stu);
+}
+
+bool StudentList::insertStudent(int32_t position, Student s){
+    return sl.Insert(position - 1, s);
 }
 
 

@@ -53,8 +53,12 @@ public:
 
     void Add(T val);
 
+
+    //if it cant find the number, then return nullptr,
     ListNode<T>* Find(T val) const;
 
+    //behind insert
+    //the index includes zero
     bool Insert(int32_t ind, T val);
 
     // equals defination needed
@@ -94,8 +98,6 @@ void List<T>::Add(T val){
     this->len++;
 }
 
-
-//if it cant find the number, then return nullptr,
 template<typename T>
 ListNode<T>* List<T>::Find(T val) const{
     ListNode<T>* cur = this->head;
@@ -108,22 +110,29 @@ ListNode<T>* List<T>::Find(T val) const{
     return cur;
 }
 
-//behind insert
-//the index includes zero
+
 template<typename T>
 bool List<T>::Insert(int32_t ind, T val){
     if(ind >= this->len) return false;
     ListNode<T>* cur = this->head;
-    while(cur){
-        if(!ind){
-            ListNode<T>* next = cur->get_nxtptr();
-            ListNode<T>* new_ptr = new ListNode<T>(val, next);
-            cur->set_nxtptr(new_ptr);
-            this->len++;
-            return true;
+    if(ind == -1){
+        ListNode<T>* next = this->get_head();
+        ListNode<T>* new_ptr = new ListNode<T>(val, next);
+        this->set_head(new_ptr);
+        this->len++;
+        return true;
+    }else{
+        while(cur){
+            if(!ind){
+                ListNode<T>* next = cur->get_nxtptr();
+                ListNode<T>* new_ptr = new ListNode<T>(val, next);
+                cur->set_nxtptr(new_ptr);
+                this->len++;
+                return true;
+            }
+            cur = cur->get_nxtptr();
+            ind--;
         }
-        cur = cur->get_nxtptr();
-        ind--;
     }
     return false;
 }
