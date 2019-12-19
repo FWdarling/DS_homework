@@ -18,7 +18,7 @@ public:
     }
     ~ListNode() = default;
 
-    T get_value() const{ return value;}
+    T get_value() { return value;}
 
     T* get_ptr() { return &value;}
 
