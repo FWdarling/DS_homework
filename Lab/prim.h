@@ -29,24 +29,26 @@ public:
 class MST{
 
 private:
-    Vector<int> used;
+    Vector<int32_t> used;
     Priority_queue<Edge> pq;
     Vector<Edge> mst;
     Vector<Vector<Edge> > all_edges;
     int32_t quaitity;
 
 public:
-    MST(int32_t n): quaitity(n){
+    MST(int32_t n = 0): quaitity(n){
         used.resize(n);
         all_edges.resize(n);
     };
     ~MST() = default;
-    
+
     void input(int32_t ori, int32_t tar, int32_t len);
 
-    void generate();
+    void generate(int32_t start);
 
     const Vector<Edge>& get_mst()const{return mst;}
+
+    void resize(int32_t n);
 };
 
 
@@ -57,14 +59,14 @@ void MST::input(int32_t ori, int32_t tar, int32_t len){
     all_edges[tar].push_back(edge_tar);
 }
 
-void MST::generate(){
-    int cur = 0;
-    int cnt = 1;
+void MST::generate(int32_t start){
+    int32_t cur = start;
+    int32_t cnt = 1;
     while(cnt < quaitity){
         used[cur] = 1;
         for(int32_t i = 0; i < all_edges[cur].get_len(); i++){
             if(!used[all_edges[cur][i].get_tar()]){
-               pq.push(all_edges[cur][i]);
+                pq.push(all_edges[cur][i]);
 
             }
         }
@@ -73,10 +75,22 @@ void MST::generate(){
             shortest_edge = pq.top();
             pq.pop();
             if(!used[shortest_edge.get_tar()]) break;
-        }   
+        }
         mst.push_back(shortest_edge);
         cnt++;
         cur = shortest_edge.get_tar();
+    }
+}
+
+void MST::resize(int32_t n){
+    used.resize(n);
+    all_edges.resize(n);
+    quaitity = n;
+    for(int32_t i = 0; i < n; i++){
+        int32_t tem = 0;
+        Vector<Edge> tem_vec;
+        used.push_back (tem);
+        all_edges.push_back ((tem_vec));
     }
 }
 

@@ -87,5 +87,17 @@ void fdelete(Tree<string>&tree, string target){
     }
 }
 
+void instructions(){
+    cout << "You can choose the following actions:" << endl;
+    cout << "A is quering the descendants of a member" << endl;
+    cout << "B is adding a descendant for a member" << endl;
+    cout << "C is creating a family for a member" << endl;
+    cout << "D is modifying a member's name" << endl;
+    cout << "E is disbanding a member's family and deleting the member" << endl;
+    cout << "Q is quiting the system" << endl;
+    cout << endl;
+    cout << "Please input your operation: ";
+}
+
 
 
